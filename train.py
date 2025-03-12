@@ -92,15 +92,19 @@ for epoch in range(start_epoch, start_epoch + args.max_epochs):
     # adjust learning rate
     adjust_learning_rate(args.lr, optimizer, epoch, args.lradj)
 
-    train(epoch, net, criterion, optimizer, logfile,
-          trainloader, device, wmloader)
+    #train(epoch, net, criterion, optimizer, logfile,
+    #      trainloader, device, wmloader)
+    
+    traingpu(epoch, net, criterion, optimizer, logfile, trainloader, device, wmloader)
 
     print("Test acc:")
-    acc = test(net, criterion, logfile, testloader, device)
+    #acc = test(net, criterion, logfile, testloader, device)
+    acc = testgpu(net, criterion, logfile, testloader, device)
 
     if args.wmtrain:
         print("WM acc:")
-        test(net, criterion, logfile, wmloader, device)
+        #test(net, criterion, logfile, wmloader, device)
+        testgpu(net, criterion, logfile, wmloader, device)
 
     print('Saving..')
     state = {
